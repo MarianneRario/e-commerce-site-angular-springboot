@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
-/** OVERRIDE THE DEFAULT
+/** OVERRIDE THE DEFAULT (productCategories to productCategory)
  * collectionResourceRel -> provide the name for the collection resource relationship
  * Name of the JSON entry -> productCategory
  * Reference to the path -> /product-category
