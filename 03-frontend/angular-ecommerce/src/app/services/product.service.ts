@@ -10,7 +10,7 @@ import { Product } from '../common/product';
 // PRODUCT SERVICE CLASS
 export class ProductService {
   // define the base url for the service that we're gonna call
-  private baseUrl: string = "http://localhost:8080/api/producs";
+  private baseUrl: string = "http://localhost:8080/api/products";
 
   // inject the HttpClient (create an instance of http client)
   constructor(private httpClient: HttpClient) { } 

@@ -1,1 +1,4 @@
-<p>product-list works!</p>
+<!-- "products" -> property name of Product[] from product-list.component.ts -->
+<p *ngFor="let tempProduct of products">
+    {{ tempProduct.name }}: {{ tempProduct.unitPrice | currency: "USD" }}
+</p>
