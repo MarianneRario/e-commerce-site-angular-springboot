@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/common/product';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductListComponent implements OnInit {
 
-  constructor() { }
+  // create a product property (array of Product)
+  products: Product[];
+
+  // inject ProductService (contains the http client request(get))
+  constructor(private productService: ProductService) { } 
 
   ngOnInit(): void {
+    this.listProduct(); // call the listProduct()
+  }
+
+  // define the listProduct method
+  listProduct(){
+    // method(getProductList) is invoked once subscribed
+    this.productService.getProductList().subscribe( 
+      data => { // when the data is returned, we can assign it to our own property
+        // assign the result to product array
+        this.products = data;
+      }
+    )
   }
 
 }
