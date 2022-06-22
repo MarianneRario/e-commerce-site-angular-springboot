@@ -10,7 +10,7 @@ import { Product } from '../common/product';
 // PRODUCT SERVICE CLASS
 export class ProductService {
   // define the base url for the service that we're gonna call
-  private baseUrl: string = "http://localhost:8080/api/products";
+  private baseUrl: string = "http://localhost:8080/api/products"; //add "?size=100" to return 100 products on the query page
 
   // inject the HttpClient (create an instance of http client)
   constructor(private httpClient: HttpClient) { } 
