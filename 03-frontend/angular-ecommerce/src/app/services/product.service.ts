@@ -9,8 +9,9 @@ import { Product } from '../common/product';
 
 // PRODUCT SERVICE CLASS
 export class ProductService {
+  // "http://localhost:8080/api/products?size=100" to return 100 products on the query page
   // define the base url for the service that we're gonna call
-  private baseUrl: string = "http://localhost:8080/api/products"; //add "?size=100" to return 100 products on the query page
+  private baseUrl: string = "http://localhost:8080/api/products"; 
 
   // inject the HttpClient (create an instance of http client)
   constructor(private httpClient: HttpClient) { } 
@@ -21,9 +22,13 @@ export class ProductService {
    * Map the JSON data from Spring Data REST to Product array
    */
   
-  getProductList(): Observable<Product[]>{
+  getProductList(categoryId: number): Observable<Product[]>{
+
+    // step7: build URL based on category id
+    const searchURL = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+
     // use the http client to make GET req to baseUrl
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+    return this.httpClient.get<GetResponse>(searchURL).pipe(
       // we're going to use map to map the data to our given data type
       map(response => response._embedded.products) // *products = products array
     );
