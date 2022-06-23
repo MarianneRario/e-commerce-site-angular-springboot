@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Product } from '../common/product';
+import { ProductCategory } from '../common/product-category'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ export class ProductService {
   // "http://localhost:8080/api/products?size=100" to return 100 products on the query page
   // define the base url for the service that we're gonna call
   private baseUrl: string = "http://localhost:8080/api/products"; 
+
+  // category url
+  private categoryUrl: string = "http://localhost:8080/api/product-category";
 
   // inject the HttpClient (create an instance of http client)
   constructor(private httpClient: HttpClient) { } 
@@ -28,9 +32,19 @@ export class ProductService {
     const searchURL = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
 
     // use the http client to make GET req to baseUrl
-    return this.httpClient.get<GetResponse>(searchURL).pipe(
+    return this.httpClient.get<GetResponseProducts>(searchURL).pipe(
       // we're going to use map to map the data to our given data type
       map(response => response._embedded.products) // *products = products array
+    );
+  }
+
+  // getProductCategories method
+  getProductCategories(): Observable<ProductCategory[]>{ // return list of productCategories
+
+    // use the http client to make GET req to baseUrl
+    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
+      // we're going to use map to map the data to our given data type
+      map(response => response._embedded.productCategory) 
     );
   }
   
@@ -38,11 +52,18 @@ export class ProductService {
 
 // GET RESPONSE INTERFACE
 // supporting interface to help us with mapping
-// unwraps the JSON from Spring Data REST _embedded entry
-interface GetResponse {
-  
+// unwraps the JSON from Spring Data REST using _embedded entry
+interface GetResponseProducts {
   _embedded: {
     products: Product[]
+  }
+}
+
+// we'll use this GetResponseProductCategory for calling REST API
+// unwraps the JSON from Spring Data REST using _embedded entry
+interface GetResponseProductCategory {
+  _embedded: {
+    productCategory: ProductCategory[]
   }
 }
 /**

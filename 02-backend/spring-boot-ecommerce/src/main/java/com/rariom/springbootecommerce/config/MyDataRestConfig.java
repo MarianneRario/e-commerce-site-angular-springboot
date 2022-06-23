@@ -21,8 +21,14 @@ import java.util.Set;
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
     // autowire JPA entity manager (for exposing entity id's)
-    @Autowired
     private EntityManager entityManager;
+
+    // constructor autowiring is needed (constructor injection) for required dependency;
+    // In our case, the entityManager is a required dependency for the MyDataRestConfig.
+    @Autowired
+    public MyDataRestConfig(EntityManager entityManager){
+        this.entityManager = entityManager;
+    }
 
 
 
