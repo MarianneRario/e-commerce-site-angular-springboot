@@ -6,6 +6,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientModule } from '@angular/common/http'
 import { ProductService } from './services/product.service';
 import { Routes, RouterModule } from '@angular/router';
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 
 // step1: define routes
 const routes: Routes = [
@@ -17,13 +18,14 @@ const routes: Routes = [
   {path: "category", component: ProductListComponent},
   {path: "products", component: ProductListComponent},
   {path: "", redirectTo: "/products", pathMatch: "full"}, // if empty path
-  {path: "**", redirectTo: "/products", pathMatch: "full"}, // generic wildcard
+  {path: "**", redirectTo: "/products", pathMatch: "full"} // generic wildcard
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCategoryMenuComponent
   ],
   imports: [
     RouterModule.forRoot(routes), // step2: configure router based on our routes
