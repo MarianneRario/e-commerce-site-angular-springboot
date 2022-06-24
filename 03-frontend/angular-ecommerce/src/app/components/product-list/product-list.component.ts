@@ -23,6 +23,9 @@ export class ProductListComponent implements OnInit {
   // search mode for search component
   searchMode: boolean;
 
+  // display the searched word
+  theKeyword: string;
+
 
   // inject ProductService (contains the http client request(get))
   // inject the current/activated route (that loaded the component; useful for accessing route parameters )
@@ -53,10 +56,10 @@ export class ProductListComponent implements OnInit {
 
   handleSearchProducts() {
     // get the actual keyword that the user enters
-    const theKeyword: string = this.route.snapshot.paramMap.get("keyword")!;
+    this.theKeyword = this.route.snapshot.paramMap.get("keyword")!;
 
     // search for the product using given keyword
-    this.productService.searchProducts(theKeyword).subscribe(
+    this.productService.searchProducts(this.theKeyword).subscribe(
       data => {
         this.products = data;
       }

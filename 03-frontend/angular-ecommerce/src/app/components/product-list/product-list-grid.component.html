@@ -21,12 +21,14 @@
                         <a href="product-detail.html">
                             <h1>{{ tempProduct.name }}</h1>
                         </a>
-                        <!-- <h2>{{ tempProduct.description }} </h2> -->
                         <div class="price">{{ tempProduct.unitPrice | currency: "USD" }}</div>
                         <a href="#" class="primary-btn">Add to cart</a>
                     </div>
                 </div>
-                
+                <!-- if products is empty, display a message -->
+                <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
+                    No products found for <b> {{theKeyword}} </b>.
+                </div>
 
             </div>
 
