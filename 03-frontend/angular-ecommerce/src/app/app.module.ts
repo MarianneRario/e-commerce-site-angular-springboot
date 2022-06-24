@@ -14,7 +14,7 @@ const routes: Routes = [
    * path:"**" is the path to match, 
    * when matched, create a new instance of component (ProductListComponent)
    */
-  {path: "category/:id", component: ProductListComponent},
+  {path: "category/:id/:name", component: ProductListComponent},
   {path: "category", component: ProductListComponent},
   {path: "products", component: ProductListComponent},
   {path: "", redirectTo: "/products", pathMatch: "full"}, // if empty path

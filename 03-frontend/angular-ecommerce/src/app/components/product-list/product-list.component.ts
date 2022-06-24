@@ -17,6 +17,9 @@ export class ProductListComponent implements OnInit {
   // step5: enhance ProductListComponent to read category id param
   currentCategoryId: number;
 
+  // to display category name
+  currentCategoryName: string;
+
   // inject ProductService (contains the http client request(get))
   // inject the current/activated route (that loaded the component; useful for accessing route parameters )
   constructor(private productService: ProductService, 
@@ -36,9 +39,12 @@ export class ProductListComponent implements OnInit {
     if(hasCategoryId){
       // get the "id" param string; convert string to a number using "+" symbol
       this.currentCategoryId = +this.route.snapshot.paramMap.get("id")!;
+      // get the "name" param string
+      this.currentCategoryName = this.route.snapshot.paramMap.get("name")!;
     } else {
       // if the category id is not available ... default at category 1
       this.currentCategoryId = 1;
+      this.currentCategoryName = 'Books';
 
     }
 
