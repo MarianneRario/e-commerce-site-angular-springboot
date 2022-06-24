@@ -32,9 +32,25 @@ export class ProductService {
     const searchURL = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
 
     // use the http client to make GET req to baseUrl
+    return this.getProducts(searchURL);
+    
+  }
+
+
+  // searchProducts method
+  searchProducts(theKeyword: string): Observable<Product[]>{
+    // step7: build URL based on keyword
+    const searchURL = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
+
+    // use the http client to make GET req to baseUrl
+    return this.getProducts(searchURL);
+  }
+  
+
+  private getProducts(searchURL: string): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(searchURL).pipe(
       // we're going to use map to map the data to our given data type
-      map(response => response._embedded.products) // *products = products array
+      map(response => response._embedded.products)
     );
   }
 

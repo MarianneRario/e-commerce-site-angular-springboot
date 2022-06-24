@@ -7,25 +7,37 @@ import { HttpClientModule } from '@angular/common/http'
 import { ProductService } from './services/product.service';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component';
+
+// WHENEVER WE WANT TO ADD ROUTE, ALWAYS ADD IT IN APP.MODULE.TS
 
 // step1: define routes
 const routes: Routes = [
   /**
    * path:"**" is the path to match, 
    * when matched, create a new instance of component (ProductListComponent)
+   * component: ProductListComponent -> this route will also be handled by ProductListComponent
    */
+
+  // route for searching product
+  {path: "search/:keyword", component: ProductListComponent}, 
+  
+  // route for returning product based on category
   {path: "category/:id/:name", component: ProductListComponent},
   {path: "category", component: ProductListComponent},
   {path: "products", component: ProductListComponent},
   {path: "", redirectTo: "/products", pathMatch: "full"}, // if empty path
   {path: "**", redirectTo: "/products", pathMatch: "full"} // generic wildcard
+
+  
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCategoryMenuComponent
+    ProductCategoryMenuComponent,
+    SearchComponent
   ],
   imports: [
     RouterModule.forRoot(routes), // step2: configure router based on our routes

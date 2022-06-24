@@ -20,6 +20,10 @@ export class ProductListComponent implements OnInit {
   // to display category name
   currentCategoryName: string;
 
+  // search mode for search component
+  searchMode: boolean;
+
+
   // inject ProductService (contains the http client request(get))
   // inject the current/activated route (that loaded the component; useful for accessing route parameters )
   constructor(private productService: ProductService, 
@@ -32,8 +36,36 @@ export class ProductListComponent implements OnInit {
     
   }
 
-  // define the listProduct method
+  // listProduct method -> will call handleListProducts
   listProducts(){
+    // check if the route has a parameter for search
+    this.searchMode = this.route.snapshot.paramMap.has("keyword");
+    if(this.searchMode){
+      // do search work
+      this.handleSearchProducts();
+    } else {
+      // just spit out the products
+      this.handleListProducts();
+    }
+
+    
+  }
+
+  handleSearchProducts() {
+    // get the actual keyword that the user enters
+    const theKeyword: string = this.route.snapshot.paramMap.get("keyword")!;
+
+    // search for the product using given keyword
+    this.productService.searchProducts(theKeyword).subscribe(
+      data => {
+        this.products = data;
+      }
+    )
+
+  }
+
+  // handleListProducts method
+  handleListProducts(){
     // check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has("id");
     if(hasCategoryId){

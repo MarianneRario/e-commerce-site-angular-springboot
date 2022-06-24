@@ -1,6 +1,10 @@
 <div class="main-content">
     <div class="section-content section-content-p30">
-        <h4>Category: {{ currentCategoryName }} </h4>
+        <!-- display the category if not in search mode -->
+        <div *ngIf="!searchMode">
+            <h4>Category: {{ currentCategoryName }} </h4>
+        </div>
+        
         
          <hr>
         

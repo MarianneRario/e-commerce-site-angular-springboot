@@ -22,4 +22,28 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByCategoryId(@RequestParam("id") Long id, Pageable pageable);
 
+
+
+    /** QUERY METHOD FOR SEARCHING PRODUCT
+     * select * from Product p where p.name like concat('%' , :name, '%')
+     *
+     * @param name -> dapat kung ano lang naka declare na fields sa Product entity (since may name dun, yun ung isesearch natin)
+     * @param pageable
+     * @return list of products
+     *
+     * SPRING DATA REST will automatically expose the endpoint:
+     * localhost:8080/api/products/search/findByNameContaining?name=?
+     *
+     */
+    Page<Product> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
+
+    // custom search query
+//    @Query( "select lower(p.name), lower(pc.category_name) " +
+//            "from Product p, ProductCategory pc " +
+//            "where lower(pc.category_name) = :name " +
+//            "OR lower(p.name) like lower('%', :name, '%') " +
+//            "order by " +
+//            "p.category_id"
+//    )
+//    Page<Product> returnProductsSearched(@RequestParam("name") String name, Pageable pageable);
 }
