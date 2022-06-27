@@ -46,12 +46,22 @@ export class ProductService {
     return this.getProducts(searchURL);
   }
   
-  // CUSTOM RETURN PRODUCTS
+  // CUSTOM RETURN PRODUCTS (all products)
   private getProducts(searchURL: string): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(searchURL).pipe(
       // we're going to use map to map the data to our given data type
       map(response => response._embedded.products)
     );
+  }
+
+  // CUSTOM RETURN SINGLE PRODUCT (product.details.component)
+  getProduct(theId: number):Observable<Product>{
+    // need to build the url based on the product id
+    const productURL = `${this.baseUrl}/${theId}`;
+    // call the rest api based on the product url
+    // get<Product> because there is no word "_embedded" that is being returned by the json
+    // so safe gamitin to
+    return this.httpClient.get<Product>(productURL);
   }
 
   // getProductCategories method

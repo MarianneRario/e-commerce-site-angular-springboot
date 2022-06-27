@@ -82,7 +82,6 @@ export class ProductListComponent implements OnInit {
       this.currentCategoryName = 'Books';
 
     }
-
     // method(getProductList) is invoked once subscribed
     this.productService.getProductList(this.currentCategoryId).subscribe(  // get the products for the given category id
       data => { // when the data is returned, we can assign it to our own property
