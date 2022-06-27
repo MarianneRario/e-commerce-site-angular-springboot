@@ -46,7 +46,7 @@ export class ProductService {
     return this.getProducts(searchURL);
   }
   
-
+  // CUSTOM RETURN PRODUCTS
   private getProducts(searchURL: string): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(searchURL).pipe(
       // we're going to use map to map the data to our given data type
