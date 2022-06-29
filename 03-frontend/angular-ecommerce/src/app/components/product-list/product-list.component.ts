@@ -12,19 +12,28 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
 
   // create a product property (array of Product)
-  products: Product[];
+  products: Product[] = [];
 
   // step5: enhance ProductListComponent to read category id param
-  currentCategoryId: number;
+  currentCategoryId: number = 1;
+  
+  // previousCategoryId
+  previousCategoryId: number = 1;
 
   // to display category name
-  currentCategoryName: string;
+  currentCategoryName: string = "";
 
   // search mode for search component
-  searchMode: boolean;
+  searchMode: boolean = false;
 
   // display the searched word
-  theKeyword: string;
+  theKeyword: string = "";
+
+  // new properties for pagination
+  thePageNumber: number = 1;
+  thePageSize: number = 10;
+  theTotalElements: number = 0; 
+
 
 
   // inject ProductService (contains the http client request(get))
@@ -80,15 +89,44 @@ export class ProductListComponent implements OnInit {
       // if the category id is not available ... default at category 1
       this.currentCategoryId = 1;
       this.currentCategoryName = 'Books';
-
     }
-    // method(getProductList) is invoked once subscribed
-    this.productService.getProductList(this.currentCategoryId).subscribe(  // get the products for the given category id
-      data => { // when the data is returned, we can assign it to our own property
-        // assign the result to product array
-        this.products = data;
-      }
-    )
+
+    /**
+     * PAGINATION
+     */
+    // check if we have different category id than previous
+    // NOTE: Angular will reuse a component if it is curretly being viewed
+
+
+    // if we have different category id than previous, reset the page number to 1
+    if(this.previousCategoryId != this.currentCategoryId){
+      this.thePageNumber = 1; 
+    }
+
+    // keep track of the previous category id
+    this.previousCategoryId = this.currentCategoryId;
+    console.log(`currentCategoryId=${this.currentCategoryId},
+                thePageNumber=${this.thePageNumber},
+                previousCategoryId=${this.previousCategoryId}`);
+
+
+    /**
+     * get the products for the given category id 
+     * method(getProductList) is invoked once subscribed
+     */ 
+    this.productService.getProductListPaginate(
+                            this.thePageNumber-1, 
+                            this.thePageSize, 
+                            this.currentCategoryId).subscribe(this.processResult());
+  }
+
+  processResult(){ // came from the spring data rest
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1; // Spring data rest: pages are 0 based
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
   }
 
 }

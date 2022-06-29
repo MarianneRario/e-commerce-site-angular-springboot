@@ -36,7 +36,6 @@ export class ProductService {
     
   }
 
-
   // searchProducts method
   searchProducts(theKeyword: string): Observable<Product[]>{
     // step7: build URL based on keyword
@@ -73,15 +72,43 @@ export class ProductService {
       map(response => response._embedded.productCategory) 
     );
   }
+
+  // pagination support 
+  getProductListPaginate(
+    thePage: number,
+    thePageSize: number,
+    categoryId: number):
+     Observable<GetResponseProducts>{ // return  an interface because we need to access metadata in calling application 
+
+    // build URL based on category id, page, and size
+    const searchURL = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}` 
+                    + `&page=${thePage}&size=${thePageSize}`;
+    //  const searchUrl = `${this.baseUrl}`
+    //                 + `?page=${thePage}&size=${thePageSize}`; // WRONG
+
+    // use the http client to make GET req to baseUrl
+    return this.httpClient.get<GetResponseProducts>(searchURL);
+    
+  }
+
+
   
 }
 
 // GET RESPONSE INTERFACE
 // supporting interface to help us with mapping
 // unwraps the JSON from Spring Data REST using _embedded entry
+// get the metadata for pagination
 interface GetResponseProducts {
   _embedded: {
     products: Product[]
+  },
+  // metadata for pagination (spring boot)
+  page: {
+    "size": number,
+    "totalElements": number,
+    "totalPages": number,
+    "number": number
   }
 }
 

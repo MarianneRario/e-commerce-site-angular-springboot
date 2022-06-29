@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // WHENEVER WE WANT TO ADD ROUTE, ALWAYS ADD IT IN APP.MODULE.TS
 
@@ -45,7 +46,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes), // step2: configure router based on our routes
     BrowserModule,
-    HttpClientModule // need to import module for http client module
+    HttpClientModule, // need to import module for http client module
+    NgbModule // import ng-bootstrap
   ],
   providers: [ProductService], //  add a reference to ProductService (allows us to inject that given service into other part of the application)
   bootstrap: [AppComponent]
