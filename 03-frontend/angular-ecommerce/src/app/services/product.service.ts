@@ -73,7 +73,7 @@ export class ProductService {
     );
   }
 
-  // pagination support 
+  // pagination support for all products
   getProductListPaginate(
     thePage: number,
     thePageSize: number,
@@ -90,6 +90,24 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchURL);
     
   }
+
+  // pagination support for search keyword
+  searchProductPaginate(
+    thePage: number,
+    thePageSize: number,
+    theKeyword: string):
+     Observable<GetResponseProducts>{
+
+      // build URL based on keyword, page, and size
+    const searchURL = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}` 
+    + `&page=${thePage}&size=${thePageSize}`;
+
+     // use the http client to make GET req to baseUrl
+     return this.httpClient.get<GetResponseProducts>(searchURL);
+
+    
+  }
+
 
 
   

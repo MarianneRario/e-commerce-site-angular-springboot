@@ -31,8 +31,9 @@ export class ProductListComponent implements OnInit {
 
   // new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 5;
   theTotalElements: number = 0; 
+  previousKeyword: string = "";
 
 
 
@@ -68,11 +69,27 @@ export class ProductListComponent implements OnInit {
     this.theKeyword = this.route.snapshot.paramMap.get("keyword")!;
 
     // search for the product using given keyword
-    this.productService.searchProducts(this.theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    // this.productService.searchProducts(this.theKeyword).subscribe(
+    //   data => {
+    //     this.products = data;
+    //   }
+    // )
+
+    // if we have different keyword than the previous, set the pageNumber to 1
+    if(this.previousKeyword != this.theKeyword){
+      this.thePageNumber = 1; 
+    }
+
+    // keep track of the previous keyword
+    this.previousKeyword = this.theKeyword;
+    
+
+    // search product for the given keyword and paginate if a lot 
+    this.productService.searchProductPaginate(
+      this.thePageNumber - 1,
+      this.thePageSize,
+      this.theKeyword
+    ).subscribe(this.processResult());
 
   }
 
@@ -119,7 +136,7 @@ export class ProductListComponent implements OnInit {
                             this.thePageSize, 
                             this.currentCategoryId).subscribe(this.processResult());
   }
-
+  
   processResult(){ // came from the spring data rest
     return (data: any) => {
       this.products = data._embedded.products;
