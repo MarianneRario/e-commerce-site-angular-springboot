@@ -38,12 +38,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
 
     // custom search query
-//    @Query( "select lower(p.name), lower(pc.category_name) " +
-//            "from Product p, ProductCategory pc " +
-//            "where lower(pc.category_name) = :name " +
-//            "OR lower(p.name) like lower('%', :name, '%') " +
-//            "order by " +
-//            "p.category_id"
+//    @Query( "select * " +
+//            "from Product p " +
+//            "where lower(p.name) like lower('%', :name, '%') " +
+//            "or lower(p.description) like lower('%', :name, '%') "
 //    )
 //    Page<Product> returnProductsSearched(@RequestParam("name") String name, Pageable pageable);
 }

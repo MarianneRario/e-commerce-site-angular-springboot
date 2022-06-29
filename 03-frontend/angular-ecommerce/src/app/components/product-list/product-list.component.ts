@@ -128,5 +128,10 @@ export class ProductListComponent implements OnInit {
       this.theTotalElements = data.page.totalElements;
     };
   }
+  updatePageSize(pageSize: number){
+    this.thePageSize = pageSize; // change pageSize
+    this.thePageNumber = 1; // reset to 1
+    this.listProducts(); // call the listProducts method to reset the page view
+  }
 
 }
