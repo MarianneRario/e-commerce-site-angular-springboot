@@ -53,7 +53,7 @@ export class CartService {
     }
 
     // log the cart data for debugging purposes
-    console.log(`${existingCartItem.name}, ${existingCartItem.quantity}`)
+    // console.log(`Existing Cart Item: ${existingCartItem.name}, ${existingCartItem.quantity}`)
     // compute cart total price and total quantity
     this.computeCartTotals();
   
@@ -90,7 +90,7 @@ export class CartService {
             subTotal: ${subTotalPrice}`)
     }
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`)
-    console.log("_________________");
+    console.log("----------------");
   }
 }
 /**

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -39,8 +41,10 @@ export class ProductListComponent implements OnInit {
 
   // inject ProductService (contains the http client request(get))
   // inject the current/activated route (that loaded the component; useful for accessing route parameters )
+  // inject the CartService dependency
   constructor(private productService: ProductService, 
-              private route: ActivatedRoute) { } 
+              private route: ActivatedRoute,
+              private cartService: CartService) { } 
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => { // subscribe on the param map on the given route
@@ -155,7 +159,11 @@ export class ProductListComponent implements OnInit {
   addToCart(theProduct: Product){
     console.log(`${theProduct.name}, ${theProduct.unitPrice}`);
 
-    // TODO: add to cart
+    // create a new CartItem by passing theProduct
+    const theCartItem = new CartItem(theProduct);
+
+    // call the cart service
+    this.cartService.addToCart(theCartItem);
   }
 
 }
