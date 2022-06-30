@@ -23,13 +23,13 @@
                             <h1>{{ tempProduct.name }}</h1>
                         </a>
                         <div class="price">{{ tempProduct.unitPrice | currency: "USD" }}</div>
-                        
-                        <a href="#" class="primary-btn">Add to cart</a>
+                        <!-- add a click handler to add to cart -->
+                            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
                     </div>
                 </div>
                 <!-- if products is empty, display a message -->
                 <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
-                    No products found for <b> {{theKeyword}} </b>.
+                    No products found for <b>{{theKeyword}}</b>.
                 </div>
 
             </div>

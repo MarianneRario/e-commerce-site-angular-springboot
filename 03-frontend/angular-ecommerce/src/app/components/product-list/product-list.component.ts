@@ -151,4 +151,11 @@ export class ProductListComponent implements OnInit {
     this.listProducts(); // call the listProducts method to reset the page view
   }
 
+  // add to cart function
+  addToCart(theProduct: Product){
+    console.log(`${theProduct.name}, ${theProduct.unitPrice}`);
+
+    // TODO: add to cart
+  }
+
 }
